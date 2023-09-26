@@ -14,18 +14,20 @@ class MixpanelClass {
         };
 
         console.log(requestData,"request Data")
-        const response = await fetch('https://api.mixpanel.com/track', {
+       fetch('https://api.mixpanel.com/track', {
             method: 'POST',
             header: {
                 "content-type": "application/x-www-form-urlencoded",
                 'accept': 'text/plain',
             },
             body: JSON.stringify([requestData])
-        });
+        }).then(res => res.json())
+           .then(data => console.log(data))
+           .catch(err => console.error(err));
 
         // Handle response...
-        console.log(await response.json(),"response");
-        console.log(response,"response");
+        // console.log(await response.json(),"response");
+        // console.log(response,"response");
     }
 
     people = {
