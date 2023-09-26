@@ -13,18 +13,21 @@ class MixpanelClass {
             }
         };
 
-        console.log(requestData,"request Data")
+        let data = []
+        data.push(requestData)
+        console.log(requestData, "request Data")
         const response = await fetch('https://api.mixpanel.com/track', {
             method: 'POST',
             headers: {
+                "content-type": "application/json",
                 'accept': 'text/plain',
             },
-            body: JSON.stringify([requestData])
+            body: data
         });
 
         // Handle response...
-        console.log(await response.json(),"response");
-        console.log(response,"response");
+        console.log(await response.json(), "response");
+        console.log(response, "response");
     }
 
     people = {
@@ -50,7 +53,7 @@ class MixpanelClass {
 const MixpanelFactory = {
     instance: null,
 
-    init: function(token) {
+    init: function (token) {
         if (!token) {
             throw new Error('Token is required to initialize Mixpanel');
         }
@@ -59,7 +62,7 @@ const MixpanelFactory = {
         console.log("inside")
         console.log("instance")
 
-        console.log(this.instance,"instance")
+        console.log(this.instance, "instance")
     }
 };
 
