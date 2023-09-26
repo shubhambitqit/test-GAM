@@ -19,6 +19,7 @@ class MixpanelClass {
         const response = await fetch('https://api.mixpanel.com/track', {
             method: 'POST',
             headers: {
+                "Access-Control-Allow-Headers": "Content-Type, Accept",
                 "content-type": "application/json",
                 'accept': 'text/plain',
             },
