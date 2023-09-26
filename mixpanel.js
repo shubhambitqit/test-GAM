@@ -24,7 +24,7 @@ class MixpanelClass {
         });
 
         // Handle response...
-        console.log(response);
+        console.log(response,"response");
     }
 
     people = {
