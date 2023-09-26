@@ -24,6 +24,7 @@ class MixpanelClass {
         });
 
         // Handle response...
+        console.log(await response.json(),"response");
         console.log(response,"response");
     }
 
