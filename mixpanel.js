@@ -16,6 +16,10 @@ class MixpanelClass {
         console.log(requestData,"request Data")
         const response = await fetch('https://api.mixpanel.com/track', {
             method: 'POST',
+            headers: {
+                "content-type": "application/json",
+                'accept': 'text/plain',
+            },
             body: JSON.stringify([requestData])
         });
 
