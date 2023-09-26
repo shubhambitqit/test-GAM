@@ -1,6 +1,6 @@
 // import { defineNuxtServerMiddleware } from '@nuxt/types';
 import {FirebaseService} from '../service/firebaseService';
-import  {PERMISSIONS} from "~/engine/dto/Constants"; // Adjust the path as needed
+import {PERMISSIONS} from "~/engine/dto/Constants"; // Adjust the path as needed
 
 import axios from 'axios';
 
