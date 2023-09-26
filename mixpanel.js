@@ -15,8 +15,6 @@ class MixpanelClass {
 
         const response = await fetch('https://api.mixpanel.com/track', {
             method: 'POST',
-            headers: {
-            },
             body: JSON.stringify([requestData])
         });
 
@@ -34,8 +32,6 @@ class MixpanelClass {
 
             const response = await fetch('https://api.mixpanel.com/engage', {
                 method: 'POST',
-                headers: {
-                },
                 body: JSON.stringify(requestData)
             });
 
@@ -57,7 +53,7 @@ const MixpanelFactory = {
         self.mixpanel = this.instance;  // expose the instance globally
         console.log("inside")
         console.log("instance")
-        
+
         console.log(this.instance,"instance")
     }
 };
