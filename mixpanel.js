@@ -56,6 +56,8 @@ const MixpanelFactory = {
         this.instance = new MixpanelClass(token);
         self.mixpanel = this.instance;  // expose the instance globally
         console.log("inside")
+        console.log("instance")
+        
         console.log(this.instance,"instance")
     }
 };
