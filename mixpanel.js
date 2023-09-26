@@ -16,7 +16,6 @@ class MixpanelClass {
         const response = await fetch('https://api.mixpanel.com/track', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
             },
             body: JSON.stringify([requestData])
         });
@@ -36,7 +35,6 @@ class MixpanelClass {
             const response = await fetch('https://api.mixpanel.com/engage', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(requestData)
             });
