@@ -76,11 +76,13 @@ class MixpanelClass {
         console.log(await resposne.json())
 
     }
+
     async trackIDEvent(eventData) {
         console.log(eventData)
         const encodedData = btoa(JSON.stringify(eventData));
         const formData = new URLSearchParams();
         formData.append('data', encodedData);
+        formData.append('strict', '0')
 
         const resposne = await fetch('https://api.mixpanel.com/track#create-identity', {
             method: 'POST',
@@ -91,7 +93,7 @@ class MixpanelClass {
             body: formData
         })
 
-        console.log(await resposne.json())
+        console.log(await resposne.json(), "response")
 
     }
 
