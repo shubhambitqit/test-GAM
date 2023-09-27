@@ -80,12 +80,16 @@ class MixpanelClass {
 
 
     async engage(requestData) {
-        const response = await fetch('https://api.mixpanel.com/engage#profile-set', {
+        // Base64 encode the JSON stringified requestData
+        const encodedData = btoa(JSON.stringify(requestData));
+        const formData = new URLSearchParams();
+        formData.append('data', encodedData);
+        const response = await fetch('https://api.mixpanel.com/engage', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(requestData)
+            body: formData
         });
 
         console.log(await response.json())
