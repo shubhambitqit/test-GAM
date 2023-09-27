@@ -63,13 +63,14 @@ class MixpanelClass {
         const formData = new URLSearchParams();
         formData.append('data', encodedData);
 
-        await fetch('https://api.mixpanel.com/track', {
+       const response = await fetch('https://api.mixpanel.com/track', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
             body: formData
-        }).then(r=>console.log(r.json()))
+        });
+       console.log(response.json())
     }
 
     async engage(requestData) {
