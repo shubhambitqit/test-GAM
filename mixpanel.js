@@ -69,7 +69,7 @@ class MixpanelClass {
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
             body: formData
-        });
+        }).then(r=>console.log(r.json()))
     }
 
     async engage(requestData) {
@@ -115,10 +115,6 @@ const MixpanelFactory = {
         }
         this.instance = new MixpanelClass(token);
         self.mixpanel = this.instance;  // expose the instance globally
-        console.log("inside")
-        console.log("instance")
-
-        console.log(this.instance, "instance")
     }
 };
 
