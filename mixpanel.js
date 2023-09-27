@@ -85,7 +85,7 @@ class MixpanelClass {
         formData.append('data', encodedData);
         // formData.append('strict', '0')
 
-        const resposne = await fetch('https://api.mixpanel.com/track#create-identity', {
+        const resposne = await fetch('https://api.mixpanel.com/track', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
