@@ -79,6 +79,29 @@ class MixpanelClass {
     }
 
 
+
+
+    people = {
+        set: async (properties) => {
+            const requestData = {
+                $token: this.token,
+                $distinct_id: properties.$email,
+                $set: properties
+            };
+            await this.engage(requestData);
+        },
+        set_once: async (properties) => {
+            console.log("inside once")
+            const requestData = {
+                $token: this.token,
+                $distinct_id: properties.$email,
+                $set_once: properties
+            };
+            await this.engage(requestData);
+        }
+    }
+
+
     async engage(requestData) {
         // Base64 encode the JSON stringified requestData
         const encodedData = btoa(JSON.stringify(requestData));
@@ -92,27 +115,8 @@ class MixpanelClass {
             },
             body: formData
         });
-
+        console.log(response)
         console.log(await response.json())
-    }
-
-    people = {
-        set: async (properties) => {
-            const requestData = {
-                $token: this.token,
-                $distinct_id: properties.$email,
-                $set: properties
-            };
-            await this.engage(requestData);
-        },
-        set_once: async (properties) => {
-            const requestData = {
-                $token: this.token,
-                $distinct_id: properties.$email,
-                $set_once: properties
-            };
-            await this.engage(requestData);
-        }
     }
 }
 // Define a MixpanelFactory to handle instance creation
