@@ -87,7 +87,8 @@ class MixpanelClass {
         const response = await fetch('https://api.mixpanel.com/engage', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'accept': 'text/plain'
             },
             body: formData
         });
