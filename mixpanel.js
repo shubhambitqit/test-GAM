@@ -30,23 +30,23 @@ class MixpanelClass {
         await this.trackIDEvent(eventData);
     }
 
-    async peopleSet(properties) {
-        const requestData = {
-            $token: this.token,
-            $distinct_id: properties.$email,
-            $set: properties
-        };
-        await this.engage(requestData);
-    }
-
-    async peopleSetOnce(properties) {
-        const requestData = {
-            $token: this.token,
-            $distinct_id: properties.$email,
-            $set_once: properties
-        };
-        await this.engage(requestData);
-    }
+    // async peopleSet(properties) {
+    //     const requestData = {
+    //         $token: this.token,
+    //         $distinct_id: properties.$email,
+    //         $set: properties
+    //     };
+    //     await this.engage(requestData);
+    // }
+    //
+    // async peopleSetOnce(properties) {
+    //     const requestData = {
+    //         $token: this.token,
+    //         $distinct_id: properties.$email,
+    //         $set_once: properties
+    //     };
+    //     await this.engage(requestData);
+    // }
 
     async track(eventName, properties) {
         const eventData = {
@@ -78,34 +78,17 @@ class MixpanelClass {
 
     }
 
-    async trackIDEvent(eventData) {
-        console.log(eventData)
-        const encodedData = btoa(JSON.stringify(eventData));
-        const formData = new URLSearchParams();
-        formData.append('data', encodedData);
-        // formData.append('strict', '0')
-
-        const resposne = await fetch('https://api.mixpanel.com/track', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'accept': 'text/plain'
-            },
-            body: formData
-        })
-
-        console.log(await resposne.json(), "response")
-
-    }
 
     async engage(requestData) {
-        await fetch('https://api.mixpanel.com/engage', {
+       const response =await fetch('https://api.mixpanel.com/engage', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(requestData)
         });
+
+       console.log(await response.json())
     }
 
     people = {
@@ -116,10 +99,7 @@ class MixpanelClass {
                 $set: properties
             };
             await this.engage(requestData);
-        }
-    };
-
-    people = {
+        },
         set_once: async (properties) => {
             const requestData = {
                 $token: this.token,
@@ -127,7 +107,6 @@ class MixpanelClass {
                 $set_once: properties
             };
             await this.engage(requestData);
-        }
     };
 }
 
