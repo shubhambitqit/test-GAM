@@ -80,7 +80,7 @@ class MixpanelClass {
 
 
     async engage(requestData) {
-        const response = await fetch('https://api.mixpanel.com/engage', {
+        const response = await fetch('https://api.mixpanel.com/engage#profile-set', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
