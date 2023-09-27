@@ -20,13 +20,12 @@ class MixpanelClass {
     async identify(distinct_id) {
         console.log('insideidentify')
         const eventData = {
-            data: {
                 event: '$identify',
                 properties: {
                     $identified_id: distinct_id,
+                    $anon_id: "NEW_ID",
                     token: this.token
                 }
-            }
         };
         await this.trackIDEvent(eventData);
     }
@@ -84,7 +83,7 @@ class MixpanelClass {
         const encodedData = btoa(JSON.stringify(eventData));
         const formData = new URLSearchParams();
         formData.append('data', encodedData);
-        formData.append('strict', '0')
+        // formData.append('strict', '0')
 
         const resposne = await fetch('https://api.mixpanel.com/track#create-identity', {
             method: 'POST',
