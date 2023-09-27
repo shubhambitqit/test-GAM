@@ -20,12 +20,12 @@ class MixpanelClass {
     async identify(distinct_id) {
         console.log('insideidentify')
         const eventData = {
-                event: '$identify',
-                properties: {
-                    $identified_id: distinct_id,
-                    $anon_id: "NEW_ID",
-                    token: this.token
-                }
+            event: '$identify',
+            properties: {
+                $identified_id: distinct_id,
+                $anon_id: "NEW_ID",
+                token: this.token
+            }
         };
         await this.trackIDEvent(eventData);
     }
@@ -80,7 +80,7 @@ class MixpanelClass {
 
 
     async engage(requestData) {
-       const response =await fetch('https://api.mixpanel.com/engage', {
+        const response = await fetch('https://api.mixpanel.com/engage', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -88,7 +88,7 @@ class MixpanelClass {
             body: JSON.stringify(requestData)
         });
 
-       console.log(await response.json())
+        console.log(await response.json())
     }
 
     people = {
@@ -107,9 +107,9 @@ class MixpanelClass {
                 $set_once: properties
             };
             await this.engage(requestData);
-    };
+        }
+    }
 }
-
 // Define a MixpanelFactory to handle instance creation
 const MixpanelFactory = {
     instance: null,
