@@ -26,7 +26,7 @@ class MixpanelClass {
                 token: this.token
             }
         };
-        await this.trackEvent(eventData);
+        await this.trackIDEvent(eventData);
     }
 
     async peopleSet(properties) {
@@ -65,6 +65,24 @@ class MixpanelClass {
         formData.append('data', encodedData);
 
         const resposne = await fetch('https://api.mixpanel.com/track', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'accept': 'text/plain'
+            },
+            body: formData
+        })
+
+        console.log(await resposne.json())
+
+    }
+    async trackIDEvent(eventData) {
+        console.log(eventData)
+        const encodedData = btoa(JSON.stringify(eventData));
+        const formData = new URLSearchParams();
+        formData.append('data', encodedData);
+
+        const resposne = await fetch('https://api.mixpanel.com/track#create-identity', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
