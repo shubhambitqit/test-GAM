@@ -5,6 +5,7 @@ class MixpanelClass {
     }
 
     async track(event, properties) {
+        console.log("track");
         const requestData = {
             event: event,
             properties: {
@@ -12,19 +13,22 @@ class MixpanelClass {
                 ...properties
             }
         };
-        console.log("stringify", JSON.stringify([requestData]));
-        console.log(requestData, "request Data")
+// Base64 encode the JSON stringified requestData
+        const encodedData = btoa(JSON.stringify(requestData));
+
+// Create the form data
+        const formData = new URLSearchParams();
+        formData.append('data', encodedData);
+
         fetch("https://api.mixpanel.com/track", {
             method: "POST",
             headers: {
-                "content-type" : "content-type: application/json",
-                "accept": "text/plain"
+                "Content-Type": "application/x-www-form-urlencoded",
+                "Accept": "text/plain"
             },
-            body: JSON.stringify([requestData])
-        }).then(res => {
-            console.log(res)
-            res.json()
+            body: formData
         })
+            .then(res => res.json())
             .then(data => console.log(data))
             .catch(err => console.error(err));
 
