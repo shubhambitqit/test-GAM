@@ -4,54 +4,102 @@ class MixpanelClass {
         this.token = token;
     }
 
-    async track(event, properties) {
-        console.log("track");
+    async alias(alias, distinct_id) {
+        console.log('insidealias')
+        const eventData = {
+            event: '$create_alias',
+            properties: {
+                distinct_id: distinct_id,
+                alias: alias,
+                token: this.token
+            }
+        };
+        await this.trackEvent(eventData);
+    }
+
+    async identify(distinct_id) {
         const requestData = {
-            event: event,
+            $token: this.token,
+            $distinct_id: distinct_id,
+            $set: {
+                $distinct_id: distinct_id
+            }
+        };
+        await this.engage(requestData);
+    }
+
+    async peopleSet(properties) {
+        const requestData = {
+            $token: this.token,
+            $distinct_id: properties.$email,
+            $set: properties
+        };
+        await this.engage(requestData);
+    }
+
+    async peopleSetOnce(properties) {
+        const requestData = {
+            $token: this.token,
+            $distinct_id: properties.$email,
+            $set_once: properties
+        };
+        await this.engage(requestData);
+    }
+
+    async track(eventName, properties) {
+        const eventData = {
+            event: eventName,
             properties: {
                 token: this.token,
                 ...properties
             }
         };
-// Base64 encode the JSON stringified requestData
-        const encodedData = btoa(JSON.stringify(requestData));
+        await this.trackEvent(eventData);
+    }
 
-// Create the form data
+    async trackEvent(eventData) {
+        const encodedData = btoa(JSON.stringify(eventData));
         const formData = new URLSearchParams();
         formData.append('data', encodedData);
 
-        fetch("https://api.mixpanel.com/track", {
-            method: "POST",
+        await fetch('https://api.mixpanel.com/track', {
+            method: 'POST',
             headers: {
-                "Content-Type": "application/x-www-form-urlencoded",
-                "Accept": "text/plain"
+                'Content-Type': 'application/x-www-form-urlencoded'
             },
             body: formData
-        })
-            .then(res => res.json())
-            .then(data => console.log(data))
-            .catch(err => console.error(err));
+        });
+    }
 
-        // Handle response...
-        // console.log(await response.json(),"response");
-        // console.log(response,"response");
+    async engage(requestData) {
+        await fetch('https://api.mixpanel.com/engage', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestData)
+        });
     }
 
     people = {
         set: async (properties) => {
             const requestData = {
                 $token: this.token,
-                $distinct_id: properties.$email,  // Assume $email as distinct_id
+                $distinct_id: properties.$email,
                 $set: properties
             };
+            await this.engage(requestData);
+        }
+    };
 
-            const response = await fetch('https://api.mixpanel.com/engage', {
-                method: 'POST',
-                body: JSON.stringify(requestData)
-            });
-
-            // Handle response...
-            console.log(response);
+    people = {
+        set_once: async (properties) => {
+            const requestData = {
+                $token: this.token,
+                $distinct_id: properties.$email,
+                $set_once: properties
+            };
+            await this.engage(requestData);
         }
     };
 }
