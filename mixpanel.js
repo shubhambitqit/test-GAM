@@ -20,10 +20,12 @@ class MixpanelClass {
     async identify(distinct_id) {
         console.log('insideidentify')
         const eventData = {
-            event: '$identify',
-            properties: {
-                $identified_id: distinct_id,
-                token: this.token
+            data: {
+                event: '$identify',
+                properties: {
+                    $identified_id: distinct_id,
+                    token: this.token
+                }
             }
         };
         await this.trackIDEvent(eventData);
