@@ -18,14 +18,15 @@ class MixpanelClass {
     }
 
     async identify(distinct_id) {
-        const requestData = {
-            $token: this.token,
-            $distinct_id: distinct_id,
-            $set: {
-                $distinct_id: distinct_id
+        console.log('insideidentify')
+        const eventData = {
+            event: '$identify',
+            properties: {
+                $identified_id: distinct_id,
+                token: this.token
             }
         };
-        await this.engage(requestData);
+        await this.trackEvent(eventData);
     }
 
     async peopleSet(properties) {
