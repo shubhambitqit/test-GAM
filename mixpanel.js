@@ -62,7 +62,7 @@ class MixpanelClass {
 
     async trackEvent(eventData) {
         console.log(eventData)
-        const encodedData = await this.utf8_to_b64(JSON.stringify(eventData));
+        const encodedData = btoa(JSON.stringify(eventData));
         const formData = new URLSearchParams();
         formData.append('data', encodedData);
 
