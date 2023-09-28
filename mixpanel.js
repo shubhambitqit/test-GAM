@@ -1,5 +1,6 @@
 // Define the Mixpanel class to encapsulate Mixpanel functionality
 class MixpanelClass {
+
     constructor(token) {
         this.token = token;
     }
@@ -23,7 +24,7 @@ class MixpanelClass {
             event: '$identify',
             properties: {
                 $identified_id: distinct_id,
-                $anon_id: "NEW_ID",
+                $anon_id: "asdasw13231sdasda",
                 token: this.token
             }
         };
@@ -61,7 +62,7 @@ class MixpanelClass {
 
     async trackEvent(eventData) {
         console.log(eventData)
-        const encodedData = btoa(JSON.stringify(eventData));
+        const encodedData = await this.utf8_to_b64(JSON.stringify(eventData));
         const formData = new URLSearchParams();
         formData.append('data', encodedData);
 
@@ -77,8 +78,6 @@ class MixpanelClass {
         console.log(await resposne.json())
 
     }
-
-
 
 
     people = {
@@ -104,7 +103,7 @@ class MixpanelClass {
 
     async engage(requestData) {
         // Base64 encode the JSON stringified requestData
-        const encodedData = btoa(JSON.stringify(requestData));
+        const encodedData = await this.utf8_to_b64(JSON.stringify(requestData));
         const formData = new URLSearchParams();
         formData.append('data', encodedData);
         const response = await fetch('https://api.mixpanel.com/engage', {
@@ -118,7 +117,15 @@ class MixpanelClass {
         console.log(response)
         console.log(await response.json())
     }
+
+
+    async utf8_to_b64(str) {
+        return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function(match, p1) {
+            return String.fromCharCode('0x' + p1);
+        }));
+    }
 }
+
 // Define a MixpanelFactory to handle instance creation
 const MixpanelFactory = {
     instance: null,
