@@ -28,7 +28,7 @@ class MixpanelClass {
                 token: this.token
             }
         };
-        await this.trackIDEvent(eventData);
+        await this.trackEvent(eventData);
     }
 
     // async peopleSet(properties) {
@@ -63,6 +63,7 @@ class MixpanelClass {
     async trackEvent(eventData) {
         console.log(eventData)
         const encodedData = btoa(JSON.stringify(eventData));
+        console.log(encodedData)
         const formData = new URLSearchParams();
         formData.append('data', encodedData);
 
