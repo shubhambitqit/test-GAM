@@ -1,6 +1,8 @@
 // Define the Mixpanel class to encapsulate Mixpanel functionality
 class MixpanelClass {
 
+    email = ''
+
     constructor(token) {
         this.token = token;
     }
@@ -24,7 +26,7 @@ class MixpanelClass {
             event: '$identify',
             properties: {
                 $identified_id: distinct_id,
-                $anon_id: "asdasw13231sdasda",
+                $anon_id: distinct_id,
                 token: this.token
             }
         };
@@ -83,6 +85,7 @@ class MixpanelClass {
 
     people = {
         set: async (properties) => {
+            this.email = properties.$email;
             const requestData = {
                 $token: this.token,
                 $distinct_id: properties.$email,
@@ -91,10 +94,10 @@ class MixpanelClass {
             await this.engage(requestData);
         },
         set_once: async (properties) => {
-            console.log("inside once")
+            console.log("inside once", this.email)
             const requestData = {
                 $token: this.token,
-                $distinct_id: properties.$email,
+                $distinct_id: this.email,
                 $set_once: properties
             };
             await this.engage(requestData);
@@ -121,7 +124,7 @@ class MixpanelClass {
 
 
     async utf8_to_b64(str) {
-        return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function(match, p1) {
+        return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function (match, p1) {
             return String.fromCharCode('0x' + p1);
         }));
     }
