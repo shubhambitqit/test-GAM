@@ -26,7 +26,7 @@ class MixpanelClass {
             event: '$identify',
             properties: {
                 $identified_id: distinct_id,
-                $anon_id: distinct_id,
+                $anon_id: distinct_id.split("$device:")[1],
                 token: this.token
             }
         };
@@ -86,6 +86,7 @@ class MixpanelClass {
     people = {
         set: async (properties) => {
             this.email = properties.$email;
+            console.log("set")
             const requestData = {
                 $token: this.token,
                 $distinct_id: properties.$email,
@@ -95,6 +96,7 @@ class MixpanelClass {
         },
         set_once: async (properties) => {
             console.log("inside once", this.email)
+            console.log(properties)
             const requestData = {
                 $token: this.token,
                 $distinct_id: this.email,
