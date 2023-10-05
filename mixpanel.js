@@ -2,12 +2,14 @@
 class MixpanelClass {
 
     email = ''
+    anonId = ''
 
     constructor(token) {
         this.token = token;
     }
 
     async alias(alias, distinct_id) {
+        this.anonId = distinct_id;
         // console.log('insidealias')
         const eventData = {
             event: '$create_alias',
@@ -22,11 +24,12 @@ class MixpanelClass {
 
     async identify(distinct_id) {
         // console.log('insideidentify')
+        console.log(distinct_id.split("$device:")[1], "identify")
         const eventData = {
             event: '$identify',
             properties: {
                 $identified_id: distinct_id,
-                $anon_id: distinct_id.split("$device:")[1],
+                $anon_id: this.anonId,
                 token: this.token
             }
         };
