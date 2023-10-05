@@ -8,7 +8,7 @@ class MixpanelClass {
     }
 
     async alias(alias, distinct_id) {
-        console.log('insidealias')
+        // console.log('insidealias')
         const eventData = {
             event: '$create_alias',
             properties: {
@@ -21,7 +21,7 @@ class MixpanelClass {
     }
 
     async identify(distinct_id) {
-        console.log('insideidentify')
+        // console.log('insideidentify')
         const eventData = {
             event: '$identify',
             properties: {
@@ -63,9 +63,9 @@ class MixpanelClass {
     }
 
     async trackEvent(eventData) {
-        console.log(eventData)
+        // console.log(eventData)
         const encodedData = await this.utf8_to_b64(JSON.stringify(eventData));
-        console.log(encodedData)
+        // console.log(encodedData)
         const formData = new URLSearchParams();
         formData.append('data', encodedData);
 
@@ -78,7 +78,7 @@ class MixpanelClass {
             body: formData
         })
 
-        console.log(await resposne.json())
+        // console.log(await resposne.json())
 
     }
 
@@ -86,7 +86,7 @@ class MixpanelClass {
     people = {
         set: async (properties) => {
             this.email = properties.$email;
-            console.log("set")
+            // console.log("set")
             const requestData = {
                 $token: this.token,
                 $distinct_id: properties.$email,
@@ -95,8 +95,8 @@ class MixpanelClass {
             await this.engage(requestData);
         },
         set_once: async (properties) => {
-            console.log("inside once", this.email)
-            console.log(properties)
+            // console.log("inside once", this.email)
+            // console.log(properties)
             const requestData = {
                 $token: this.token,
                 $distinct_id: this.email,
@@ -120,8 +120,8 @@ class MixpanelClass {
             },
             body: formData
         });
-        console.log(response)
-        console.log(await response.json())
+        // console.log(response)
+        // console.log(await response.json())
     }
 
 
