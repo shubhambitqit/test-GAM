@@ -4,8 +4,9 @@ class MixpanelClass {
     email = ''
     anonId = ''
 
-    constructor(token) {
+    constructor(token, server) {
         this.token = token;
+        this.server = server === 'US' ? `api` : 'api-eu'
     }
 
     async alias(alias, distinct_id) {
@@ -71,8 +72,8 @@ class MixpanelClass {
         // console.log(encodedData)
         const formData = new URLSearchParams();
         formData.append('data', encodedData);
-
-        const resposne = await fetch('https://api.mixpanel.com/track', {
+        console.log(`https://${this.server}.mixpanel.com/track`, "url")
+        const resposne = await fetch(`https://${this.server}.mixpanel.com/track`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -89,7 +90,7 @@ class MixpanelClass {
     people = {
         set: async (properties) => {
             this.email = properties.$email;
-            // console.log("set")
+            console.log("set", "prop")
             const requestData = {
                 $token: this.token,
                 $distinct_id: properties.$email,
@@ -115,7 +116,7 @@ class MixpanelClass {
         const encodedData = await this.utf8_to_b64(JSON.stringify(requestData));
         const formData = new URLSearchParams();
         formData.append('data', encodedData);
-        const response = await fetch('https://api.mixpanel.com/engage', {
+        const response = await fetch(`https://${this.server}.mixpanel.com/engage`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -123,8 +124,8 @@ class MixpanelClass {
             },
             body: formData
         });
-        // console.log(response)
-        // console.log(await response.json())
+        console.log(response)
+        console.log(await response.json())
     }
 
 
@@ -138,13 +139,18 @@ class MixpanelClass {
 // Define a MixpanelFactory to handle instance creation
 const MixpanelFactory = {
     instance: null,
-
+    dataCenter: null,
     init: function (token) {
         if (!token) {
             throw new Error('Token is required to initialize Mixpanel');
         }
-        this.instance = new MixpanelClass(token);
+
+        this.instance = new MixpanelClass(token, this.dataCenter);
         self.mixpanel = this.instance;  // expose the instance globally
+    },
+
+    setServer: function (server) {
+        this.dataCenter = server
     }
 };
 
