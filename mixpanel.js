@@ -6,7 +6,8 @@ class MixpanelClass {
 
     constructor(token, server) {
         this.token = token;
-        this.server = server === 'US' ? `api` : 'api-eu'
+        console.log(server, "server")
+        this.server = server === 'US' ? 'api' : 'api-eu'
     }
 
     async alias(alias, distinct_id) {
@@ -141,6 +142,7 @@ const MixpanelFactory = {
     instance: null,
     dataCenter: null,
     init: function (token) {
+        console.log(token,"check token");
         if (!token) {
             throw new Error('Token is required to initialize Mixpanel');
         }
@@ -150,6 +152,7 @@ const MixpanelFactory = {
     },
 
     setServer: function (server) {
+        console.log(server,"check Server");
         this.dataCenter = server
     }
 };
