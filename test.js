@@ -16,6 +16,9 @@ var _cio = _cio || [];
     t.id = 'cio-tracker';
     t.setAttribute('data-site-id', '9c86c6f450dc4ddff6cd');
     t.setAttribute('data-use-array-params', 'true');
+    t.setAttribute('data-cross-site-support', 'true');
+    // t.setAttribute('data-cross-site-support', 'true');
+
 
     // Enables in-app messaging
     t.setAttribute('data-use-in-app', 'true');
