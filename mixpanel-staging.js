@@ -6,7 +6,7 @@ class MixpanelClass {
 
     constructor(token, server) {
         this.token = token;
-        console.log(server, "server")
+
         this.server = server === 'US' ? 'api' : 'api-eu'
     }
 
@@ -26,7 +26,7 @@ class MixpanelClass {
 
     async identify(distinct_id) {
         // console.log('insideidentify')
-        console.log(distinct_id.split("$device:")[1], "identify")
+
         const eventData = {
             event: '$identify',
             properties: {
@@ -73,7 +73,6 @@ class MixpanelClass {
         // console.log(encodedData)
         const formData = new URLSearchParams();
         formData.append('data', encodedData);
-        console.log(`https://${this.server}.mixpanel.com/track`, "url")
         const resposne = await fetch(`https://${this.server}.mixpanel.com/track`, {
             method: 'POST',
             headers: {
@@ -83,7 +82,6 @@ class MixpanelClass {
             body: formData
         })
 
-        // console.log(await resposne.json())
 
     }
 
@@ -91,7 +89,7 @@ class MixpanelClass {
     people = {
         set: async (properties) => {
             this.email = properties.$email;
-            console.log("set", "prop")
+
             const requestData = {
                 $token: this.token,
                 $distinct_id: properties.$email,
@@ -125,8 +123,6 @@ class MixpanelClass {
             },
             body: formData
         });
-        console.log(response)
-        console.log(await response.json())
     }
 
 
@@ -142,7 +138,6 @@ const MixpanelFactory = {
     instance: null,
     dataCenter: null,
     init: function (token) {
-        console.log(token,"check token");
         if (!token) {
             throw new Error('Token is required to initialize Mixpanel');
         }
@@ -152,7 +147,6 @@ const MixpanelFactory = {
     },
 
     setServer: function (server) {
-        console.log(server,"check Server");
         this.dataCenter = server
     }
 };
