@@ -6,6 +6,7 @@
 
         <XCircleIcon v-if="variant === 'danger'" class="h-5 w-5" :class="[getTextColor()]" aria-hidden="true" />
 
+        
         <ExclamationCircleIcon
             v-if="variant === 'warning'"
             class="h-5 w-5"
